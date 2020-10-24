@@ -84,7 +84,7 @@ Based on this, the functional architecture that was proposed was as below. Since
 
 4. Merge the output file partitions externally (Hadoop)
 
-## hadoop fs getmerge to merge partition files into single file
+#### hadoop fs getmerge to merge partition files into single file
 
 
 
@@ -143,8 +143,8 @@ The testing phase involved unit tests after adding features during the developme
 2. Sample records tested to check if word is actually appearing in all the documents of the corresponding doc_ids in (word, [doc_ids]) - grep/findstr recursively in linux/windows.
 	Eg. Find word "pests" in all docs (findstr /r  /S /I /M /C:"\<pests\>" *.* ). Gives result 3,15 which matches correctly with our solution.
 	
-- Observation and discrepancies found: Some documents like Document 9 contains special symbols between words (eg. right--so). Current cleaning process removes the special symbols and merges the two words (rightso) to capture as one word. Can be solved using python regular expressions in future sprint.
-- After testing a sample of 20 words, there were no other discrepancies found
+    - Observation and discrepancies found: Some documents like Document 9 contains special symbols between words (eg. right--so). Current cleaning process removes the special symbols and merges the two words (rightso) to capture as one word. Can be solved using python regular expressions in future sprint.
+    - After testing a sample of 20 words, there were no other discrepancies found
 
 3. Negative test : Sample records tested to check if word is appearing in documents other than the ones accumulated in result (word, [doc_ids]) - grep/findstr recursively in linux/windows
 4. Duplicate record test : No duplicates in the list of doc_ids and no duplicates in the words and word_ids extracted - Data can be put into microsoft excel and apply conditional formatting to duplicates (This works as amount of data is small).
@@ -155,9 +155,9 @@ The testing phase involved unit tests after adding features during the developme
 #### Unit functional tests
 
 1. Punctuation removal - Sample words to check if punctuations and special characters are removed from words. Pattern '--' was also replaced with '' which can be undone in the next sprint.
-- Observation : Document 9 contains special symbols between words (eg. right--so). Current cleaning process removes the special symbols and merges the two words (rightso).
+	- Observation : Document 9 contains special symbols between words (eg. right--so). Current cleaning process removes the special symbols and merges the two words (rightso).
 
-1.1. Numbers are maintained and are extracted correctly and indexed.
+    1.1. Numbers are maintained and are extracted correctly and indexed.
 
 2. Handling of words separated by multiple spaces - We are extracting words by using python split() function which also handles multiple spaces. 
 Sample words like 'CHAPTER' which always have multiple spaces before them tested and are being extracted properly. 
