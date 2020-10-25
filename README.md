@@ -28,6 +28,10 @@ The following Databricks documentation has all the detailed support and instruct
 
 https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/346304/2168141618055043/484361/latest.html
 
+The following Documentation has detailed instructions on Uploading a file to DBFS and saving output file from DBFS to local through databricks cli:
+
+https://docs.databricks.com/data/databricks-file-system.html
+
 You can also run it locally on a machine having spark after changing the path of input dataset and the out directory according to system. It currently contains databricks file system paths. (Databricks is a platform that runs on top of Apache Spark, so it should not be a problem).
 Then merge the output partition files on Hadoop fs using getmerge command.
 
