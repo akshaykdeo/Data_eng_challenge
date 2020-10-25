@@ -24,7 +24,11 @@ To reproduce the results as with the existing code using Databricks,
 5. Download the output partition files using Databricks cli (Need pip install databricks-cli).
 6. Merge the output partition files on Hadoop fs using getmerge command.
 
-You can run it locally on a machine having spark after changing the path of input dataset and the out directory according to system. It currently contains databricks file system paths. (Databricks is a platform that runs on top of Apache Spark, so it should not be a problem).
+The following Databricks documentation has all the detailed support and instructions for the steps summarized above: 
+
+https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/346304/2168141618055043/484361/latest.html
+
+You can also run it locally on a machine having spark after changing the path of input dataset and the out directory according to system. It currently contains databricks file system paths. (Databricks is a platform that runs on top of Apache Spark, so it should not be a problem).
 Then merge the output partition files on Hadoop fs using getmerge command.
 
 
