@@ -146,16 +146,16 @@ The testing phase involved unit tests after adding features during the developme
     - Observation and discrepancies found: Some documents like Document 9 contains special symbols between words (eg. right--so). Current cleaning process removes the special symbols and merges the two words (rightso) to capture as one word. Can be solved using python regular expressions in future sprint.
     - After testing a sample of 20 words, there were no other discrepancies found
 
-3. Negative test : Sample records tested to check if word is appearing in documents other than the ones accumulated in result (word, [doc_ids]) - grep/findstr recursively in linux/windows
+3. Negative test : Sample records tested to check if word is appearing in documents other than the ones accumulated in result (word, [doc_ids]) - grep/findstr recursively in linux/windows - A sample of 5 records tested, no discrepancies found.
 4. Duplicate record test : No duplicates in the list of doc_ids and no duplicates in the words and word_ids extracted - Data was put into microsoft excel and apply conditional formatting to duplicates (This works as amount of data is small). Can use shell commands for large data.
 5. Not null checks : Missing/ Blank data (rows/words/doc_ids list) - No blank data noticed.
-6. Data test to check if correct mapping of word -> word_id was obtained in Inverted index - Compare data in rdds wordid_dict_rdd and inverted_index_rdd (contains (word, word_id, [doc_ids]) after join operation) to see if the mapping of word -> word_id is consistent in both rdds.
+6. Data test to check if correct mapping of word -> word_id was obtained in Inverted index - Compare data in rdds wordid_dict_rdd (word, word_id) and inverted_index_rdd (contains (word, word_id, [doc_ids]) after join operation) using Microsoft Word Compare to see if the mapping of word -> word_id is consistent in both rdds.
 
 
 #### Unit functional tests
 
 1. Punctuation removal - Sample words to check if punctuations and special characters are removed from words. 
-	- Observation : Document 9 contains special symbols between words (eg. right--so). Current cleaning process removes the special symbols and merges the two words (rightso). Pattern '--' was also replaced with '' which can be undone in the next sprint.
+	- Observation : Some documents like Document 9 contains special symbols between words (eg. right--so). Current cleaning process removes the special symbols and merges the two words (rightso). Currently, pattern '--' is also replaced with '' which can be undone in the next sprint.
 
     1.1. Numbers are maintained and are extracted correctly and indexed.
 
@@ -168,9 +168,9 @@ Sample words like 'CHAPTER' which always have multiple spaces before them tested
 For full-fledged data and functional testing, it is always better to develop an automation testing script built on top of python/Shell script to test large chunks of data.
 
 Testing considerations - 
--Inverted index is correctly generated for words and correct files are identified.
--Words ids correctly mapped in the inverted index solution.
--All words are getting extracted and parsed. No missed words - Extract all distinct words from the dataset (can use a NOSQL database) and possibly perform Data Validation and Compare with Words extracted in our solution.
+- Inverted index is correctly generated for words and correct files are identified.
+- Words ids correctly mapped in the inverted index solution.
+- All words are getting extracted and parsed. No missed words - Extract all distinct words from the dataset (can use a NOSQL database) and possibly perform Data Validation and Compare with Words extracted in our solution.
 
 
 #### Edge cases.
