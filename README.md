@@ -27,8 +27,8 @@ To reproduce the results as with the existing code using Databricks,
 You can run it locally on a machine having spark after changing the path of input dataset and the out directory according to system. It currently contains databricks file system paths. (Databricks is a platform that runs on top of Apache Spark, so it should not be a problem).
 Then merge the output partition files on Hadoop fs using getmerge command.
 
-## Approach Taken
 
+## Approach Taken
 The ulterior goal of the project is that the solution should work on a massive dataset.
 There are several ways to tackle this problem, the best way using distributed programming, that runs on a distributed system so that we are not limited by the amount of storage, memory and CPU of a single machine.
 While blocked sort-based indexing that is mentioned in the challenge description is a potential solution, manually dividing the data into blocks, processing and then merging by code would be not only increase the tediousness but also may disturb the readability and concision of the code.
@@ -39,6 +39,7 @@ This is a Apache-Spark based platform which runs a distributed system behind the
 After deciding on all the technical solution design considerations, code development was started using Agile methodology.
 In the first sprint, only the basic functionality was developed. Only after the basic functionality was achieved, the next sprint involved removal of redundant and debug level purpose code. This also involved tailoring the code to achieve any improvements in performance, efficiency and execution speed.
 Development was done using a part of the dataset. However, the final code was run and thoroughly tested using the complete dataset. The testing phase involved unit tests after adding features during the development phase as well as the functional and data testing performed at the end.
+
 
 ## Architecture
 
@@ -85,7 +86,6 @@ Based on this, the functional architecture that was proposed was as below. Since
 4. Merge the output file partitions externally (Hadoop)
 
 #### hadoop fs getmerge to merge partition files into single file
-
 
 
 ## Code structure and clarity
@@ -139,7 +139,7 @@ The testing phase involved unit tests after adding features during the developme
 
 #### Data Transformation logic checks
 
-1. Word_ids and corresponding list of doc_ids are generated both in sorted order - Simple count check in excel.
+1. Word_ids and corresponding list of doc_ids are generated both in sorted order - Simple end count matching check in excel.
 2. Sample records tested to check if word is actually appearing in all the documents of the corresponding doc_ids in (word, [doc_ids]) - grep/findstr recursively in linux/windows.
 	Eg. Find word "pests" in all docs (findstr /r  /S /I /M /C:"\<pests\>" *.* ). Gives result 3,15 which matches correctly with our solution.
 	
@@ -147,15 +147,15 @@ The testing phase involved unit tests after adding features during the developme
     - After testing a sample of 20 words, there were no other discrepancies found
 
 3. Negative test : Sample records tested to check if word is appearing in documents other than the ones accumulated in result (word, [doc_ids]) - grep/findstr recursively in linux/windows
-4. Duplicate record test : No duplicates in the list of doc_ids and no duplicates in the words and word_ids extracted - Data can be put into microsoft excel and apply conditional formatting to duplicates (This works as amount of data is small).
-5. Not null checks : Missing/ Blank words
+4. Duplicate record test : No duplicates in the list of doc_ids and no duplicates in the words and word_ids extracted - Data was put into microsoft excel and apply conditional formatting to duplicates (This works as amount of data is small). Can use shell commands for large data.
+5. Not null checks : Missing/ Blank data (rows/words/doc_ids list) - No blank data noticed.
 6. Data test to check if correct mapping of word -> word_id was obtained in Inverted index - Compare data in rdds wordid_dict_rdd and inverted_index_rdd (contains (word, word_id, [doc_ids]) after join operation) to see if the mapping of word -> word_id is consistent in both rdds.
 
 
 #### Unit functional tests
 
-1. Punctuation removal - Sample words to check if punctuations and special characters are removed from words. Pattern '--' was also replaced with '' which can be undone in the next sprint.
-	- Observation : Document 9 contains special symbols between words (eg. right--so). Current cleaning process removes the special symbols and merges the two words (rightso).
+1. Punctuation removal - Sample words to check if punctuations and special characters are removed from words. 
+	- Observation : Document 9 contains special symbols between words (eg. right--so). Current cleaning process removes the special symbols and merges the two words (rightso). Pattern '--' was also replaced with '' which can be undone in the next sprint.
 
     1.1. Numbers are maintained and are extracted correctly and indexed.
 
@@ -175,8 +175,7 @@ Testing considerations -
 
 #### Edge cases.
 1. Blank File in input dataset is currently processed and handled correctly. Similarly corrupted file in dataset can be tested.
-2. After applying deeper text cleaning and stemming, check for edge case words.
-
+2. After applying deeper text cleaning and stemming, check for edge case words (words having same roots).
 
 
 ## Future scope
